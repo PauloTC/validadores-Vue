@@ -26,6 +26,13 @@
         <!-- <pre>pass: {{ $v.password }}</pre> -->
 
       <v-btn @click="$v.$touch"  block color="secondary" dark>Login</v-btn>
+      <v-flex xs8>
+        <v-text-field
+          id="testing"
+          name="input-1"
+          label="Label Text"
+        ></v-text-field>
+      </v-flex>
     </v-form>
 
 </template>

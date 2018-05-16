@@ -79,6 +79,7 @@
       grabarnuevatarea(index,nuevotexto){
         console.log(index,nuevotexto)
         this.tareas[index].text = nuevotexto
+        
       }
     }
   }

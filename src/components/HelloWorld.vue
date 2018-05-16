@@ -1,27 +1,33 @@
 <template>
-  <div class="visa-container" >
+
     <!-- <span class='visa-banner' ></span> -->
-    <form @submit.prevent="submit" v-bind:class="{ 'form-group--error': $v.email.email.$error }" action="">
-      <div class="form-group" v-bind:class="{ 'form-group--error': $v.email.$error }">
-        <label class="form__label" for="">Email</label>
-        <input  class="form__input" v-model.trim="email"  @input="$v.email.$touch()">
-        <span class="form-group__message" v-if="!$v.email.required && $v.email.$dirty">Campo Requerido</span>
-        <span class="form-group__message" v-if="!$v.email.email">Este no es un {{$v.email.$params.email.type}} valido.</span>
-        <pre>email: {{ $v.email }}</pre>
-      </div>
+    <v-form @submit.prevent="submit" v-bind:class="{ 'form-group--error': $v.email.email.$error }" action="">
+      
+      <v-text-field
+        v-model.trim="email"
+        @input="$v.email.$touch()"
+        label="Email"
+        :error-messages="emailErrors"
+        required
+        @blur="$v.email.$touch()"
+      ></v-text-field>
 
-      <div class="form-group" v-bind:class="{ 'form-group--error': $v.password.$error }">
-        <label class="form__label"  for="">Contrasena</label>
-        <input type="text"  v-model.trim="password"  @input="$v.password.$touch()">
-        <span class="form-group__message" v-if="!$v.password.required && $v.password.$dirty">Campo Requerido</span>
-          <span class="form-group__message" v-if="!$v.password.minLength">Debe tener como minimo {{$v.password.$params.minLength.min}} caracteres.</span>
-        <pre>pass: {{ $v.password }}</pre>
-      </div>
 
-      <button @click="$v.$touch">LOGIN</button>
-    </form>
+       <v-text-field
+        v-model.trim="password"
+        @input="$v.password.$touch()"
+        label="Password"
+        :error-messages="passwordErrors"
+        required
+        @blur="$v.password.$touch()"
+        type = "password"
+      ></v-text-field>
+    
+        <!-- <pre>pass: {{ $v.password }}</pre> -->
 
-  </div>
+      <v-btn @click="$v.$touch"  block color="secondary" dark>Login</v-btn>
+    </v-form>
+
 </template>
 
 
@@ -30,21 +36,19 @@
 import { email, required, minLength } from 'vuelidate/lib/validators'
 
 export default {
-  data () {
-    return {
-      password: '',
-      email: '',
-      valilMail: false
-    }
-  },
   validations: {
     email: {
       email,
       required
     },
-    password: {
-      required,
-      minLength: minLength(6)
+    password: { required, minLength: minLength(6) }
+  },
+
+  data () {
+    return {
+      password: '',
+      email: '',
+      valilMail: false,
     }
   },
   methods: {
@@ -53,6 +57,22 @@ export default {
     },
     validador(){
       console.log("se valida")
+    }
+  },
+  computed: {
+    emailErrors () {
+      const errors = []
+      if (!this.$v.email.$dirty) return errors
+      !this.$v.email.email && errors.push('debe ser un e-mail valido')
+      !this.$v.email.required && errors.push('E-mail es requerido')
+      return errors
+    },
+    passwordErrors () {
+      const errors = []
+      if (!this.$v.password.$dirty) return errors
+      !this.$v.password.minLength && errors.push('Debe tener como minimo 6 caracteres')
+      !this.$v.password.required && errors.push('Password es requerido')
+      return errors
     }
   }
 }
@@ -86,7 +106,14 @@ export default {
       background-repeat: no-repeat;
       background-position: center center;
     }
+    .form-group__message {
+      font-size: 12px;
+      color: tomato;
+    }
 
+    .input-group__details {
+      display: none !important ;
+    }
     /* .form-group span{
       display: block;
       color: #f57f6c;

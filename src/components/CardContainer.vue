@@ -2,7 +2,7 @@
 
   <div class="card-container">
     <v-flex xs4 >
-      
+
       <v-text-field
         v-model="nombre"
         >{{ nombre }}
@@ -49,7 +49,6 @@ export default {
   components: {
     Card
   },
-  
   data(){
     return {
       nombre: "Lista de Tareas",

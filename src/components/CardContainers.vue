@@ -46,21 +46,28 @@
 import Card from './Card.vue'
 
 export default {
+  props : {
+    CardContainer: Object
+  },
   components: {
     Card
   },
   data(){
     return {
-      nombre: "Lista de Tareas",
-      tareas: [
-      ],
-      btntarea: false,
-      tareatext: "",
-      tareatextlength: false,
-      showedit: false,
-      cuentaId: 0,
-      inputlength: false,
-      btnAgregar: true,
+      containers: [{
+        nombre: "Lista de Tareas",
+        tareas: [
+        ],
+        btntarea: false,
+        tareatext: "",
+        tareatextlength: false,
+        showedit: false,
+        cuentaId: 0,
+        inputlength: false,
+        btnAgregar: true,
+        }
+      ]
+
     }
   },
   methods: {

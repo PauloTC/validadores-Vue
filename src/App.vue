@@ -2,7 +2,12 @@
   <div id="app">
     <v-app>
       <v-content>
-        <CardContainer/>
+        <CardContainers
+          v-for="CardContainer in CardContainers"
+          :key = "CardContainer.id"
+        >
+        </CardContainers>
+          
       </v-content>
     </v-app>
   </div>
@@ -10,14 +15,17 @@
 
 <script>
 
-import HelloWorld from './components/HelloWorld.vue'
-import CardContainer from './components/CardContainer.vue'
+import CardContainers from './components/CardContainers.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld,
     CardContainer
+  },
+  data(){
+    return{
+
+    }
   }
 }
 </script>

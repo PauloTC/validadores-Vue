@@ -2,10 +2,9 @@
   <div class="card-container">
     
     <h3> {{ nombre }} </h3>
-    <button v-on:click="agregartarea" v-if="btntarea" href="">Añadir una tarea</button>
+    <button v-on:click="agregartarea" v-if="btntarea" >Añadir una tarea</button>
     <ul>
-      <v-flex xs8>
-        <li v-for="tarea in tareas"
+        <v-layout row v-for="tarea in tareas" 
             v-bind:key= "tarea.id">
             <v-text-field
               v-bind:title="tareas.text" id="testing"
@@ -16,12 +15,12 @@
                >
               {{ tarea.id }}
             </v-text-field>
-            <button v-on:click="editartarea(tarea.id)">
-              <v-icon color="grey lighten-1">star_border</v-icon>
-            </button>
-            <v-btn v-on:click="grabarnuevatarea(tarea.id,tarea.nuevotexto)" depressed small color="primary">Guardar</v-btn>
-        </li>
-      </v-flex>
+
+             <v-flex xs4>
+                <v-btn v-on:click="editartarea(tarea.id)" depressed small color="warning">Editar</v-btn>            
+                <v-btn v-on:click="grabarnuevatarea(tarea.id,tarea.nuevotexto)" depressed small color="primary">Guardar Cambios</v-btn>
+             </v-flex>
+        </v-layout>
     </ul>
     <v-form  @submit="submit" v-if="!btntarea" >
       <v-flex xs12>
@@ -36,13 +35,12 @@
 </template>
 <script>
 
-  // import { required } from 'vuelidate/lib/validators'
+  import { required } from 'vuelidate/lib/validators'
 
   export default {
 
     validations: {
-      tareatext : {
-      }
+      nuevotexto: { required }
     },
 
     data(){
@@ -71,15 +69,13 @@
         )
         this.tareatext = ""
       },
-      editartarea(item){
-       console.log(this.tareas[item].readonly)        
-        this.tareas[item].readonly = false
-       console.log(this.tareas[item].readonly)
+      editartarea(index){
+        this.tareas[index].readonly = false
       },
       grabarnuevatarea(index,nuevotexto){
-        console.log(index,nuevotexto)
         this.tareas[index].text = nuevotexto
-        
+        this.tareas[index].readonly = true
+        this.tareas[index].nuevotexto = ""
       }
     }
   }

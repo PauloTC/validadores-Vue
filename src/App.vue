@@ -2,8 +2,7 @@
   <div id="app">
     <v-app>
       <v-content>
-        <!-- <HelloWorld /> -->
-        <Card/>
+        <CardContainer/>
       </v-content>
     </v-app>
   </div>
@@ -12,13 +11,13 @@
 <script>
 
 import HelloWorld from './components/HelloWorld.vue'
-import Card from './components/Card.vue'
+import CardContainer from './components/CardContainer.vue'
 
 export default {
   name: 'app',
   components: {
     HelloWorld,
-    Card
+    CardContainer
   }
 }
 </script>

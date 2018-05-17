@@ -1,33 +1,43 @@
 <template>
+
   <div class="card-container">
-    
-    <h2> {{ nombre }} </h2>
+    <v-flex xs4 >
+      
+      <v-text-field
+        v-model="nombre"
+        >{{ nombre }}
+      </v-text-field>
 
-    <v-layout >
-      <v-flex xs12>
-        <Card 
-          v-for="tarea in tareas" 
-          :tarea="tarea"
-          :key = "tarea.id"
-        >
-      </Card>  
-      </v-flex>
-
-    </v-layout>
-
-    <button v-if="btnAgregar" v-on:click="agregartarea" >Añadir una tarea</button>
-
-    <v-form  @submit="submit" v-if="btntarea" >
-      <v-flex xs4>
-        <v-text-field 
-          v-model="tareatext" 
-          box multi-line label=""
+      <v-layout >
+        <v-flex xs12>
+          <Card 
+            v-for="tarea in tareas" 
+            :tarea="tarea"
+            :key = "tarea.id"
+            @clicked="eliminarCard"
           >
-        </v-text-field>
-        <v-btn v-if="tareatextlength" v-on:click="submit" color="success">GUARDAR</v-btn>
-        <v-btn v-on:click="cerrarCajaTexto" color="error">CERRAR</v-btn>        
-      </v-flex>  
-    </v-form>
+        </Card>  
+        </v-flex>
+
+      </v-layout>
+
+      <button v-if="btnAgregar" v-on:click="agregartarea" >Añadir una tarea</button>
+
+      <v-form  @submit="submit" v-if="btntarea" >
+        <v-flex xs12>
+          <v-text-field 
+            v-model="tareatext" 
+            box multi-line label=""
+            >
+          </v-text-field>
+          <v-flex xs10 offset-xs1>
+            <v-btn v-if="tareatextlength" v-on:click="submit" color="success">GUARDAR</v-btn>
+            <v-btn v-on:click="cerrarCajaTexto" color="error">CERRAR</v-btn>        
+          </v-flex>
+        </v-flex>  
+      </v-form>
+
+    </v-flex>
   </div>
 </template>
 
@@ -35,12 +45,11 @@
   
 import Card from './Card.vue'
 
-
 export default {
   components: {
     Card
   },
-
+  
   data(){
     return {
       nombre: "Lista de Tareas",
@@ -73,6 +82,15 @@ export default {
       this.btnAgregar = true,
       this.btntarea =  false
       this.tareatext = ""
+    },
+    eliminarCard(val) {
+      const that = this
+      this.tareas.filter(function(tarea, index){
+       if(tarea.id == val) {
+         that.tareas.splice(index,1)
+       }
+      })
+      
     }
   },
   watch: {

@@ -1,8 +1,8 @@
 <template>
 
     <div class="card-container">
-      <v-flex xs4 >
-
+      <v-flex xs12 >
+        <!-- {{CardContainer}} -->
         <v-text-field
           v-bind:placeholder = "CardContainer.nombre"
           > 
@@ -11,31 +11,35 @@
         <v-layout >
           <v-flex xs12>
             <Card 
-              v-for="tarea in tareas" 
+              v-for="tarea in CardContainer.tareas" 
               :tarea="tarea"
               :key = "tarea.id"
-              @clicked="eliminarCard"
+              @borrarT="eliminarCard"
             >
           </Card>  
           </v-flex>
 
         </v-layout>
-
-        <button v-if="CardContainer.btnAgregar" v-on:click="agregartarea(CardContainer.id)" >Añadir una tarea</button>
+        
+        <button class="agregarTarea" v-if="CardContainer.btnAgregar" v-on:click="agregartarea(CardContainer.id)" >Añadir una tarea</button>
 
         <v-form  @submit="submit" v-if="CardContainer.btntarea" >
           <v-flex xs12>
             <v-text-field 
-              v-model="tareatext" 
-              box multi-line label=""
+              id="textBox"
+              v-model="CardContainer.tareatext"
+              v-bind:class="{ active: isActive, 'text-danger': hasError }"
+              box multi-line label="" 
+              @clicked="eliminarCard"
+              :onkeyup="escucharText()"
               >
             </v-text-field>
             <v-flex xs10 offset-xs1>
-              <v-btn v-if="tareatextlength" v-on:click="submit" color="success">GUARDAR</v-btn>
+              <v-btn v-on:click="submit(CardContainer.tareatext)" color="success">GUARDAR</v-btn>
               <v-btn v-on:click="cerrarCajaTexto(CardContainer.id)" color="error">CERRAR</v-btn>        
             </v-flex>
           </v-flex>  
-        </v-form>
+        </v-form> 
 
       </v-flex>
     </div>
@@ -50,48 +54,35 @@ export default {
     CardContainer: Object,
   },
   components: {
-    Card
+    Card,
   },
   data(){
     return {
-        tareas: [
-        ],
+      isActive: false,
+      hasError: true,
     }
   },
   methods: {
     agregartarea(item) {
-       this.$emit('agregarT', item)
+      console.log(item)
+      this.$emit('agregarT', item)
     },
-    submit(){
-      this.tareas.push({
-        id: this.cuentaId++,
-        text: this.tareatext,
-        readonly: true,
-        }
-      )
-      this.tareatext = ""
+    submit(item){
+      this.$emit('limpiaT',this.CardContainer.id),
+      this.$emit('pasarValores', this.CardContainer.id, item ,Date.now())
     },
     cerrarCajaTexto(item){
       this.$emit('cerrarT', item)
     },
-    eliminarCard(val) {
-      const that = this
-      this.tareas.filter(function(tarea, index){
-       if(tarea.id == val) {
-         that.tareas.splice(index,1)
-       }
-      })
-      
-    }
-  },
-  watch: {
-    tareatext: function() {
-      if(this.tareatext.length > 0 ) {
-        this.tareatextlength = true
-      }else{
-        this.tareatextlength = false          
-      }
+    eliminarCard(item) {
+      console.log(item, this.CardContainer.id)
+      this.$emit('borrarT', item ,this.CardContainer.id)
     },
+    escucharText(){
+      // $textBox = document.getElementById(#textBox)
+      console.log("estoy escuchando")
+
+    }
   }
 }  
 
@@ -99,5 +90,15 @@ export default {
 </script>
 
 <style>
-
+  .agregarTarea{
+    line-height: 2;
+    color: tomato;
+    margin-top: 20px;
+  }
+  .card-container{
+    margin-right: 30px;
+  }
+  .text-danger{
+    background: tomato;
+  }
 </style>

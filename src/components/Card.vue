@@ -1,23 +1,25 @@
 <template>
   <div>
     <v-card>
-      <v-flex xs10 offset-xs1>
-        <v-text-field
-          id="InputValue"
+      <v-flex xs12>
+
+        <v-text-field class="input-field"
+          v-bind:class="{ active: isActive, 'text-danger': hasError }"
           v-bind:placeholder="tarea.text" 
           :readonly="tarea.readonly" 
           v-model="tarea.text"
-          color="red"
+          color="green"
             > 
           {{tarea}}
         </v-text-field>
       </v-flex>
-      <v-flex class="button-container"  xs12>
-        <v-btn v-on:click="editartarea()" depressed small color="warning">Editar</v-btn>            
+      <v-flex class="button-container" xs12>
+        
+        <v-btn v-on:click="editartarea()"  small color="warning">Editar</v-btn>            
 
-        <v-btn v-if="inputLength" v-on:click="grabarnuevatarea()" depressed small color="primary">Guardar Cambios</v-btn>
+        <v-btn v-if="inputLength" v-on:click="grabarnuevatarea()"  small color="primary">Guardar Cambios</v-btn>
 
-        <v-btn v-on:click="eliminartarea(tarea.id)" depressed small color="error">Eliminar</v-btn>
+        <v-btn v-on:click="eliminartarea(tarea.id)"  small color="error">Eliminar</v-btn>
 
       </v-flex>
     </v-card>
@@ -45,9 +47,11 @@
 
         this.tarea.readonly = true
       },
-      eliminartarea(item){
-        this.$emit('clicked', item)
-      }
+      eliminartarea(value){
+        console.log(value)
+        this.$emit('borrarT',value)
+        
+      },
     },  
     watch: {
       CardTarea: function(){
@@ -65,9 +69,37 @@
   }  
  
 </script>
-<style scoped >
+<style>
   .button-container{
     display: flex;
     justify-content: center;
+  }
+  .input-field{
+    padding: 10px;
+    background: #e2e4e6;
+  }
+  .input-field input{
+    cursor: pointer;
+    padding: 0px 10px;
+  }
+  .input-field input:hover{
+    background: #e2e4e6;
+    transition: all 0.4s ease;
+  }
+  .input-field:hover input{
+    background: #fff;
+  }
+  .input-group--text-field-box.input-group--multi-line textarea{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .input-group--text-field-box:not(.input-group--textarea).input-group--multi-line .input-group__input{
+    padding-top: 10px;
+  }
+  .input-group__details{
+    display: none;
+  },
+  .text-danger{
+    background: red !important;
   }
 </style>

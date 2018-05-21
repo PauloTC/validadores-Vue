@@ -8,7 +8,9 @@
           v-bind:placeholder="tarea.text" 
           :readonly="tarea.readonly" 
           v-model="tarea.text"
-          color="green"
+          append-icon="settings"
+          solo-inverted
+          flat
             > 
           {{tarea}}
         </v-text-field>
@@ -70,36 +72,7 @@
  
 </script>
 <style>
-  .button-container{
-    display: flex;
-    justify-content: center;
-  }
-  .input-field{
-    padding: 10px;
-    background: #e2e4e6;
-  }
-  .input-field input{
-    cursor: pointer;
-    padding: 0px 10px;
-  }
-  .input-field input:hover{
-    background: #e2e4e6;
-    transition: all 0.4s ease;
-  }
-  .input-field:hover input{
-    background: #fff;
-  }
-  .input-group--text-field-box.input-group--multi-line textarea{
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-  .input-group--text-field-box:not(.input-group--textarea).input-group--multi-line .input-group__input{
-    padding-top: 10px;
-  }
-  .input-group__details{
-    display: none;
-  },
-  .text-danger{
-    background: red !important;
-  }
+.input-field i{
+  cursor: pointer;
+}
 </style>

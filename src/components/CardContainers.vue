@@ -43,10 +43,10 @@
 
       </v-flex>
     </div>
+
 </template>
 
 <script>
-  
 import Card from './Card.vue'
 
 export default {

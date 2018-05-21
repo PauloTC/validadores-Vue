@@ -1,19 +1,27 @@
 <template>
   <div id="app">
     <v-app>
-      <v-content>
-          <CardContainers 
-            v-for="cardContainer in CardContainers"
-            :CardContainer="cardContainer"
-            :key = "cardContainer.id"
-            @agregarT="agregarTarea"
-            @cerrarT="cerrarTexto"
-            @borrarT="borrarTarea"
-            @limpiaT="limpiarTexto"
-            @pasarValores="pasarValores"
-          >
-          </CardContainers>
-          <button class="nueva-lista" v-on:click="agregarLista" >Añadir nueva lista</button>
+      <Header />
+      <v-content grid-list-md text-xs-center class="body-container" >
+          <v-layout row  wrap >
+             <v-flex xs10>
+               <v-layout row >
+                  <CardContainers  
+                    v-for="cardContainer in CardContainers"
+                    :CardContainer="cardContainer"
+                    :key = "cardContainer.id"
+                    @agregarT="agregarTarea"
+                    @cerrarT="cerrarTexto"
+                    @borrarT="borrarTarea"
+                    @limpiaT="limpiarTexto"
+                    @pasarValores="pasarValores"
+                  />
+                </v-layout>
+            </v-flex>
+            <v-flex xs2>
+              <button class="nueva-lista" v-on:click="agregarLista" >Añadir nueva lista</button>
+            </v-flex>
+          </v-layout>
       </v-content>
     </v-app>
   </div>
@@ -22,11 +30,13 @@
 <script>
 
 import CardContainers from './components/CardContainers.vue'
+import Header from './components/Header.vue'
 
 export default {
   name: 'app',
   components: {
-    CardContainers
+    CardContainers,
+    Header
   },
   data(){
     return{
@@ -88,6 +98,9 @@ export default {
 </script>
 
 <style>
+  .body-container {
+    background: steelblue
+  }
   .content--wrap {
     display: flex;
   }
@@ -97,6 +110,7 @@ export default {
     margin-top: 30px;
     background: #e2e4e6;
     max-width: 300px;
+    align-self: flex-start;
   }
   .nueva-lista{
     align-self: flex-start;

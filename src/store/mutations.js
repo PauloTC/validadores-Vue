@@ -18,9 +18,9 @@ export default {
           ],
       })
     },
-    cerrarTexto(state){
-      state.CardContainers[0].btnAgregar = true,
-      state.CardContainers[0].btntarea = false,
-      state.CardContainers[0].tareatext = ""
+    cerrarTexto(state, value){
+      state.CardContainers[value].btnAgregar = true,
+      state.CardContainers[value].btntarea = false,
+      state.CardContainers[value].tareatext = ""
     }
 }

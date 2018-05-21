@@ -36,7 +36,7 @@
             </v-text-field>
             <v-flex xs10 offset-xs1>
               <v-btn v-on:click="submit(CardContainer.tareatext)" color="success">GUARDAR</v-btn>
-              <v-btn v-on:click="cerrarTexto" color="error">CERRAR</v-btn>        
+              <v-btn v-on:click="cerrarTexto(CardContainer.id)" color="error">CERRAR</v-btn>        
             </v-flex>
           </v-flex>  
         </v-form> 
@@ -64,6 +64,7 @@ export default {
   },
   methods: {
     cerrarTexto(val){
+      console.log(val + " sdfsdklahdfhajkshfkjasjfhaskjdhfjkashd")
       this.$store.commit("cerrarTexto",val)
     },
     agregartarea(item) {

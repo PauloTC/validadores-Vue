@@ -36,7 +36,7 @@
             </v-text-field>
             <v-flex xs10 offset-xs1>
               <v-btn v-on:click="submit(CardContainer.tareatext)" color="success">GUARDAR</v-btn>
-              <v-btn v-on:click="cerrarCajaTexto(CardContainer.id)" color="error">CERRAR</v-btn>        
+              <v-btn v-on:click="cerrarTexto" color="error">CERRAR</v-btn>        
             </v-flex>
           </v-flex>  
         </v-form> 
@@ -48,8 +48,10 @@
 
 <script>
 import Card from './Card.vue'
+import store from '../store/'
 
 export default {
+  store,
   props : {
     CardContainer: Object,
   },
@@ -61,6 +63,9 @@ export default {
     }
   },
   methods: {
+    cerrarTexto(val){
+      this.$store.commit("cerrarTexto",val)
+    },
     agregartarea(item) {
       console.log(item)
       this.$emit('agregarT', item)
@@ -69,9 +74,9 @@ export default {
       this.$emit('limpiaT',this.CardContainer.id),
       this.$emit('pasarValores', this.CardContainer.id, item ,Date.now())
     },
-    cerrarCajaTexto(item){
-      this.$emit('cerrarT', item)
-    },
+    // cerrarCajaTexto(item){
+    //   this.$emit('cerrarT', item)
+    // },
     eliminarCard(item) {
       console.log(item, this.CardContainer.id)
       this.$emit('borrarT', item ,this.CardContainer.id)

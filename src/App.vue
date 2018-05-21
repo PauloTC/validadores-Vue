@@ -2,6 +2,7 @@
   <div id="app">
     <v-app>
       <Header />
+      <p>{{ count }}</p>
       <v-content grid-list-md text-xs-center class="body-container" >
           <v-layout row  wrap >
              <v-flex xs10>
@@ -11,7 +12,6 @@
                     :CardContainer="cardContainer"
                     :key = "cardContainer.id"
                     @agregarT="agregarTarea"
-                    @cerrarT="cerrarTexto"
                     @borrarT="borrarTarea"
                     @validarT="validarTexto" 
                     @limpiaT="limpiarTexto"
@@ -32,9 +32,11 @@
 
 import CardContainers from './components/CardContainers.vue'
 import Header from './components/Header.vue'
+import store from './store/'
 
 export default {
   name: 'app',
+  store,
   components: {
     CardContainers,
     Header
@@ -42,21 +44,15 @@ export default {
   data(){
     return{
       cuentaId: 0,
+      count: 0,
       CardContainers: [
-       
       ]
     }
   },
   methods: {
     agregarTarea(val){
-        console.log(val)
         this.CardContainers[val].btntarea = true
         this.CardContainers[val].btnAgregar = false
-    },
-    cerrarTexto(val){
-      this.CardContainers[val].btnAgregar = true,
-      this.CardContainers[val].btntarea =  false
-      this.CardContainers[val].tareatext = ""
     },
     validarTexto(val,index){
       console.log(val)
@@ -90,21 +86,11 @@ export default {
       })
     },
     agregarLista(){
-      this.CardContainers.push({
-          id: this.cuentaId++,
-          nombre: "Colocar un Titulo",
-          btntarea: false,
-          tareatext: "",
-          tareatextlength: false,
-          showedit: false,
-          cuentaId: 0,
-          inputlength: false,
-          btnAgregar: true,
-          isActive: false,
-          hasError: true,
-          tareas: [
-          ],
-      })
+      this.CardContainers = this.$store.state.CardContainers
+      this.cuentaId = this.$store.state.cuentaId
+      this.count = this.$store.state.count
+      this.$store.commit("agregarLista")
+      this.$store.commit("increment")
     }
   }
 }

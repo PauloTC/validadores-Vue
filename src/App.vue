@@ -13,6 +13,7 @@
                     @agregarT="agregarTarea"
                     @cerrarT="cerrarTexto"
                     @borrarT="borrarTarea"
+                    @validarT="validarTexto" 
                     @limpiaT="limpiarTexto"
                     @pasarValores="pasarValores"
                   />
@@ -57,6 +58,16 @@ export default {
       this.CardContainers[val].btntarea =  false
       this.CardContainers[val].tareatext = ""
     },
+    validarTexto(val,index){
+      console.log(val)
+      if(val.length > 0){
+        this.CardContainers[index].isActive = true
+        this.CardContainers[index].hasError = false
+      }else{
+        this.CardContainers[index].isActive = false
+        this.CardContainers[index].hasError = true    
+      }
+    },
     limpiarTexto(val){
       this.CardContainers[val].tareatext = ""
     },
@@ -89,6 +100,8 @@ export default {
           cuentaId: 0,
           inputlength: false,
           btnAgregar: true,
+          isActive: false,
+          hasError: true,
           tareas: [
           ],
       })

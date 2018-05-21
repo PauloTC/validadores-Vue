@@ -28,7 +28,7 @@
             <v-text-field 
               id="textBox"
               v-model="CardContainer.tareatext"
-              v-bind:class="{ active: isActive, 'text-danger': hasError }"
+              v-bind:class="{ active: CardContainer.isActive, 'text-danger': CardContainer.hasError }"
               box multi-line label="" 
               @clicked="eliminarCard"
               :onkeyup="escucharText()"
@@ -58,8 +58,6 @@ export default {
   },
   data(){
     return {
-      isActive: false,
-      hasError: true,
     }
   },
   methods: {
@@ -79,9 +77,13 @@ export default {
       this.$emit('borrarT', item ,this.CardContainer.id)
     },
     escucharText(){
-      // $textBox = document.getElementById(#textBox)
-      console.log("estoy escuchando")
-
+      // $textBox = document.getElementById(textBox)
+      this.$emit('validarT', this.CardContainer.tareatext,this.CardContainer.id)
+      // if ($textBox.lenght > 0){
+      //   console.log("hay contenido")
+      // }else {
+      //   cnsole.log("no hay contenido")
+      // }
     }
   }
 }  

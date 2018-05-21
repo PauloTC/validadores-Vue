@@ -8,9 +8,8 @@
           v-bind:placeholder="tarea.text" 
           :readonly="tarea.readonly" 
           v-model="tarea.text"
-          append-icon="settings"
           solo-inverted
-          flat
+          append-icon="more_vert"
             > 
           {{tarea}}
         </v-text-field>

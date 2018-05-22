@@ -35,8 +35,8 @@
               >
             </v-text-field>
             <v-flex xs10 offset-xs1>
-              <v-btn v-on:click="submit(CardContainer.tareatext)" color="success">GUARDAR</v-btn>
-              <v-btn v-on:click="cerrarTexto(CardContainer.id)" color="error">CERRAR</v-btn>        
+              <v-btn v-on:click="agregaValores()" color="success">GUARDAR</v-btn>
+              <v-btn v-on:click="cerrarTexto()" color="error">CERRAR</v-btn>        
             </v-flex>
           </v-flex>  
         </v-form> 
@@ -48,10 +48,9 @@
 
 <script>
 import Card from './Card.vue'
-import store from '../store/'
+
 
 export default {
-  store,
   props : {
     CardContainer: Object,
   },
@@ -63,25 +62,24 @@ export default {
     }
   },
   methods: {
-    cerrarTexto(val){
-      this.$store.commit("cerrarTexto",val)
+    agregaValores(){
+      this.$store.dispatch('agregaValores', {  id : this.CardContainer.id, text: this.CardContainer.tareatext , idtext : Date.now() })
+    },
+    cerrarTexto(){
+      this.$store.dispatch("cerrarTexto",this.CardContainer.id)
     },
     agregarTarea(val) {
       this.$store.commit("agregarTarea",val)
     },
-    submit(val){
-      this.$emit('limpiaT',this.CardContainer.id),
-      this.$emit('pasarValores', this.CardContainer.id, val ,Date.now())
+    submit(id,text,textid){
+      this.$store.commit("agregaValores",id,text,textid)
     },
 
-    eliminarCard(item) {
-      console.log(item, this.CardContainer.id)
-      this.$emit('borrarT', item ,this.CardContainer.id)
+    eliminarCard(value) {
+      this.$store.dispatch('borrarTarea', {id :this.CardContainer.id, textid: value})
     },
     escucharText(){
-
-      this.$emit('validarT', this.CardContainer.tareatext,this.CardContainer.id)
-
+      this.$store.dispatch('escucharTexto', {id :this.CardContainer.id, text: this.CardContainer.tareatext})
     }
   }
 }  
@@ -97,6 +95,7 @@ export default {
   }
   .card-container{
     margin-right: 30px;
+    border-radius: 10px
   }
   .text-danger{
     background: tomato;

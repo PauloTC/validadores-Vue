@@ -2,7 +2,6 @@
   <div id="app">
     <v-app>
       <Header />
-      <p>{{ count }}</p>
       <v-content grid-list-md text-xs-center class="body-container" >
           <v-layout row  wrap >
              <v-flex xs10>
@@ -11,10 +10,8 @@
                     v-for="cardContainer in CardContainers"
                     :CardContainer="cardContainer"
                     :key = "cardContainer.id"
-                    @borrarT="borrarTarea"
                     @validarT="validarTexto" 
                     @limpiaT="limpiarTexto"
-                    @pasarValores="pasarValores"
                   />
                 </v-layout>
             </v-flex>
@@ -50,7 +47,6 @@ export default {
   },
   methods: {
     validarTexto(val,index){
-      console.log(val)
       if(val.length > 0){
         this.CardContainers[index].isActive = true
         this.CardContainers[index].hasError = false
@@ -61,24 +57,6 @@ export default {
     },
     limpiarTexto(val){
       this.CardContainers[val].tareatext = ""
-    },
-    pasarValores(val, item, id){
-      console.log(item)
-      console.log(val)
-      console.log(id)
-      this.CardContainers[val].tareas.push({
-        id: id,
-        text : item,
-        readonly : true
-      })
-    },
-    borrarTarea(item,val){
-      const that = this
-      this.CardContainers[val].tareas.filter(function(obj, index){
-          if( obj.id == item ){
-              that.CardContainers[val].tareas.splice(index,1)
-          }
-      })
     },
     agregarLista(){
       this.CardContainers = this.$store.state.CardContainers

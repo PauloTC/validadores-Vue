@@ -6,18 +6,17 @@
         <v-layout row>
 
           <v-text-field class="input-field"
-            v-bind:class="{ active: isActive, 'text-danger': hasError }"
             v-bind:placeholder="tarea.text" 
             :readonly="tarea.readonly" 
             v-model="tarea.text"
             hide-details
             solo-inverted
+            mt-5
               > 
             {{tarea}}
           </v-text-field>
           <v-menu 
             offset-y 
-            absolute=true
             >
             <v-btn slot="activator"  flat icon color="indigo">
               <v-icon>more_vert</v-icon>
@@ -31,16 +30,6 @@
             </v-list>
           </v-menu>
         </v-layout>
-
-
-      </v-flex>
-      <v-flex class="button-container" xs12>
-        
-        <v-btn v-on:click="editartarea()"  small color="warning">Editar</v-btn>            
-
-        <v-btn v-if="inputLength" v-on:click="grabarnuevatarea()"  small color="primary">Guardar Cambios</v-btn>
-
-        <v-btn v-on:click="eliminartarea(tarea.id)"  small color="error">Eliminar</v-btn>
 
       </v-flex>
     </v-card>
@@ -74,20 +63,7 @@
       eliminartarea(value){
         this.$emit('borrarT',value)
       },
-    },  
-    watch: {
-      CardTarea: function(){
-
-        let $input = document.getElementById('InputValue').value
-
-        if($input.length == 0 ){
-          this.inputLength = false
-        } else {
-          this.inputLength = true
-        }
-        
-      }
-    },
+    }
   }  
  
 </script>
@@ -95,4 +71,7 @@
   .input-field i{
     cursor: pointer;
   };
+  .layout {
+    margin-bottom: 10px;
+  }
 </style>

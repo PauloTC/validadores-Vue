@@ -3,16 +3,36 @@
     <v-card>
       <v-flex xs12>
 
-        <v-text-field class="input-field"
-          v-bind:class="{ active: isActive, 'text-danger': hasError }"
-          v-bind:placeholder="tarea.text" 
-          :readonly="tarea.readonly" 
-          v-model="tarea.text"
-          solo-inverted
-          append-icon="more_vert"
-            > 
-          {{tarea}}
-        </v-text-field>
+        <v-layout row>
+
+          <v-text-field class="input-field"
+            v-bind:class="{ active: isActive, 'text-danger': hasError }"
+            v-bind:placeholder="tarea.text" 
+            :readonly="tarea.readonly" 
+            v-model="tarea.text"
+            hide-details
+            solo-inverted
+              > 
+            {{tarea}}
+          </v-text-field>
+          <v-menu 
+            offset-y 
+            absolute=true
+            >
+            <v-btn slot="activator"  flat icon color="indigo">
+              <v-icon>more_vert</v-icon>
+            </v-btn>
+            <v-list>
+              <v-list-tile  >
+                <v-list-tile-title v-on:click="editartarea()">Editar</v-list-tile-title>
+                <v-list-tile-title v-on:click="grabarnuevatarea()">Guardar</v-list-tile-title>
+                <v-list-tile-title v-on:click="eliminartarea(tarea.id)">Eliminar</v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+          </v-menu>
+        </v-layout>
+
+
       </v-flex>
       <v-flex class="button-container" xs12>
         
@@ -36,7 +56,11 @@
     data(){
       return {
         CardTarea : "",
-        inputLength: true
+        inputLength: true,
+           items: [
+            { title: 'Editar'},             
+            { title: 'Guardar'},
+          ]
       }
     },
     methods: {
@@ -48,9 +72,7 @@
         this.tarea.readonly = true
       },
       eliminartarea(value){
-        console.log(value)
         this.$emit('borrarT',value)
-        
       },
     },  
     watch: {
@@ -70,7 +92,7 @@
  
 </script>
 <style>
-.input-field i{
-  cursor: pointer;
-}
+  .input-field i{
+    cursor: pointer;
+  };
 </style>

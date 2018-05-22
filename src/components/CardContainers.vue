@@ -21,7 +21,7 @@
 
         </v-layout>
         
-        <button class="agregarTarea" v-if="CardContainer.btnAgregar" v-on:click="agregartarea(CardContainer.id)" >Añadir una tarea</button>
+        <button class="agregarTarea" v-if="CardContainer.btnAgregar" v-on:click="agregarTarea(CardContainer.id)" >Añadir una tarea</button>
 
         <v-form  @submit="submit" v-if="CardContainer.btntarea" >
           <v-flex xs12>
@@ -64,32 +64,24 @@ export default {
   },
   methods: {
     cerrarTexto(val){
-      console.log(val + " sdfsdklahdfhajkshfkjasjfhaskjdhfjkashd")
       this.$store.commit("cerrarTexto",val)
     },
-    agregartarea(item) {
-      console.log(item)
-      this.$emit('agregarT', item)
+    agregarTarea(val) {
+      this.$store.commit("agregarTarea",val)
     },
-    submit(item){
+    submit(val){
       this.$emit('limpiaT',this.CardContainer.id),
-      this.$emit('pasarValores', this.CardContainer.id, item ,Date.now())
+      this.$emit('pasarValores', this.CardContainer.id, val ,Date.now())
     },
-    // cerrarCajaTexto(item){
-    //   this.$emit('cerrarT', item)
-    // },
+
     eliminarCard(item) {
       console.log(item, this.CardContainer.id)
       this.$emit('borrarT', item ,this.CardContainer.id)
     },
     escucharText(){
-      // $textBox = document.getElementById(textBox)
+
       this.$emit('validarT', this.CardContainer.tareatext,this.CardContainer.id)
-      // if ($textBox.lenght > 0){
-      //   console.log("hay contenido")
-      // }else {
-      //   cnsole.log("no hay contenido")
-      // }
+
     }
   }
 }  

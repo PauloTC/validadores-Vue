@@ -2,6 +2,7 @@ export default {
     increment (state) {
       state.count++
     },
+    //APP
     agregarLista(state){
       state.CardContainers.push({
           id: state.cuentaId++,
@@ -18,9 +19,15 @@ export default {
           ],
       })
     },
+    //CARD-CONTAINER
     cerrarTexto(state, value){
-      state.CardContainers[value].btnAgregar = true,
-      state.CardContainers[value].btntarea = false,
-      state.CardContainers[value].tareatext = ""
+      const $Container = state.CardContainers[value]
+      $Container.btnAgregar = true,
+      $Container.btntarea = false,
+      $Container.tareatext = ""
+    },
+    agregarTarea(state,value){
+      state.CardContainers[value].btntarea = true
+      state.CardContainers[value].btnAgregar = false
     }
 }

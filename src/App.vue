@@ -11,7 +11,6 @@
                     v-for="cardContainer in CardContainers"
                     :CardContainer="cardContainer"
                     :key = "cardContainer.id"
-                    @agregarT="agregarTarea"
                     @borrarT="borrarTarea"
                     @validarT="validarTexto" 
                     @limpiaT="limpiarTexto"
@@ -50,10 +49,6 @@ export default {
     }
   },
   methods: {
-    agregarTarea(val){
-        this.CardContainers[val].btntarea = true
-        this.CardContainers[val].btnAgregar = false
-    },
     validarTexto(val,index){
       console.log(val)
       if(val.length > 0){
